@@ -23,21 +23,21 @@ public class CocheController {
     @Autowired
     private CocheServicio cocheServicio;
 
-   /* @RequestMapping
+   @GetMapping
     public String listarCoches(Model modelo){
         modelo.addAttribute("coches", cocheServicio.listarTodosLosCoches());
         return "coches"; // nos devuelve el archivo coches.   
     }
-    */
+   
 
 
-    @GetMapping({ "/coches/nuevo"})
+    @GetMapping({"/coches/nuevo"})
     public String mostrarFormularioRegistrarCoche(Model modelo){
         Coche coche = new Coche();
         modelo.addAttribute("coche", coche);
-        return "crear_coches";
+        return "crear_coche";
     }
-/* 
+
     @PostMapping("/coches")
 	public String guardarCoche(@ModelAttribute Coche coche) {
 		cocheServicio.guardarCoche(coche);
@@ -46,11 +46,20 @@ public class CocheController {
 
 	@GetMapping("/coches/editar/{id}")
 	public String mostrarFormularioDeEditar(@PathVariable Long id, Model modelo) {
-		modelo.addAttribute("coche", cocheServicio.obtenerCochePorId(id));
-		return "editar_coches";
+		Optional<Coche> cocheOptional = cocheServicio.obtenerCochePorId(id);
+        
+        if(cocheOptional.isPresent()){
+            modelo.addAttribute("coche", cocheOptional.get());
+            return "editar_coches";
+        }
+        else{
+            modelo.addAttribute("error","No se pudo encontrar un coche con el id " +id);
+            return "error";
+        }
+       
 	}
 
-	/*
+	
     @PostMapping("/coches/{id}")
     public String actualizarCoche(@PathVariable Long id, @ModelAttribute Coche coche, Model modelo) {
         Optional<Coche> cocheExistenteOptional = cocheServicio.obtenerCochePorId(id);
@@ -62,22 +71,22 @@ public class CocheController {
             cocheExistente.setModelo(coche.getModelo());
             cocheExistente.setMatricula(coche.getMatricula());
     
-            cocheServicio.actualizarCoche(cocheExistente);
+            cocheServicio.guardarCoche(cocheExistente);
             return "redirect:/coches";  
         } else {
             modelo.addAttribute("error", "ID de coche no encontrada");
             return "error";  // Aquí se redirige a la página error.html
         }
     }
-    */
     
-/* /
+    
+
 	@GetMapping("/coches/{id}")
 	public String eliminarCoche(@PathVariable Long id) {
 		cocheServicio.eliminarCoche(id);
 		return "redirect:/coches";
 	}
-    */
+    
 /*
     @GetMapping("/coches/{id}")
     public ResponseEntity<?> obtenerCoche(@PathVariable Long id) {

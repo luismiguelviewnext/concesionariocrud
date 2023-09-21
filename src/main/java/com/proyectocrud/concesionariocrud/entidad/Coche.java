@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 
 @Entity
-@Table(name = "vehiculos")
+@Table(name = "coches")
 public class Coche {
    
     @Id
@@ -27,6 +27,12 @@ public class Coche {
 
     public Coche(Long id, String marca, String modelo, String matricula) {
         this.id = id;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.matricula = matricula;
+    }
+
+     public Coche(String marca, String modelo, String matricula) {
         this.marca = marca;
         this.modelo = modelo;
         this.matricula = matricula;

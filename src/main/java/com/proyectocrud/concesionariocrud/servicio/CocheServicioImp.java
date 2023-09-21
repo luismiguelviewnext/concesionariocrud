@@ -12,6 +12,7 @@ import com.proyectocrud.concesionariocrud.repositorio.CocheRepositorio;
 @Service
 public class CocheServicioImp implements CocheServicio {
   
+    @Autowired
     private CocheRepositorio repositorio;
 
     @Override
