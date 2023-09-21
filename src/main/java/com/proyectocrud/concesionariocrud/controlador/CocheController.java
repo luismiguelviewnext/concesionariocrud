@@ -1,6 +1,8 @@
 package com.proyectocrud.concesionariocrud.controlador;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.proyectocrud.concesionariocrud.entidad.Coche;
 import com.proyectocrud.concesionariocrud.servicio.CocheServicio;
@@ -23,13 +28,12 @@ public class CocheController {
     @Autowired
     private CocheServicio cocheServicio;
 
-   @GetMapping
+   @GetMapping("/")
     public String listarCoches(Model modelo){
         modelo.addAttribute("coches", cocheServicio.listarTodosLosCoches());
         return "coches"; // nos devuelve el archivo coches.   
     }
    
-
 
     @GetMapping({"/coches/nuevo"})
     public String mostrarFormularioRegistrarCoche(Model modelo){
@@ -38,53 +42,42 @@ public class CocheController {
         return "crear_coche";
     }
 
-    @PostMapping("/coches")
-	public String guardarCoche(@ModelAttribute Coche coche) {
+    @PostMapping("/guardar-coches")
+	public RedirectView guardarCoche(@ModelAttribute Coche coche) {
 		cocheServicio.guardarCoche(coche);
-		return "redirect:/coches";
+        /*Set<Coche> listaCoche = new HashSet();
+        listaCoche = coche.getListaCoche();
+        listaCoche.add(coche);
+        coche.setListaCoche(listaCoche);
+        if(listaCoche.isEmpty())*/
+		return new RedirectView("/");
 	}
 
 	@GetMapping("/coches/editar/{id}")
 	public String mostrarFormularioDeEditar(@PathVariable Long id, Model modelo) {
-		Optional<Coche> cocheOptional = cocheServicio.obtenerCochePorId(id);
-        
-        if(cocheOptional.isPresent()){
-            modelo.addAttribute("coche", cocheOptional.get());
+            modelo.addAttribute("coche", cocheServicio.obtenerCochePorId(id));
             return "editar_coches";
         }
-        else{
-            modelo.addAttribute("error","No se pudo encontrar un coche con el id " +id);
-            return "error";
-        }
-       
-	}
-
 	
-    @PostMapping("/coches/{id}")
+    @PostMapping("/coches/actualizar/{id}")
     public String actualizarCoche(@PathVariable Long id, @ModelAttribute Coche coche, Model modelo) {
-        Optional<Coche> cocheExistenteOptional = cocheServicio.obtenerCochePorId(id);
-    
-        if (cocheExistenteOptional.isPresent()) {
-            Coche cocheExistente = cocheExistenteOptional.get();
+       
+            Coche cocheExistente = cocheServicio.obtenerCochePorId(id);
             cocheExistente.setId(id);
             cocheExistente.setMarca(coche.getMarca());
             cocheExistente.setModelo(coche.getModelo());
             cocheExistente.setMatricula(coche.getMatricula());
     
-            cocheServicio.guardarCoche(cocheExistente);
+            cocheServicio.actualizarCoche(cocheExistente);
             return "redirect:/coches";  
-        } else {
-            modelo.addAttribute("error", "ID de coche no encontrada");
-            return "error";  // Aquí se redirige a la página error.html
-        }
     }
     
     
 
-	@GetMapping("/coches/{id}")
-	public String eliminarCoche(@PathVariable Long id) {
+	@PostMapping("/coches/eliminar")
+	public RedirectView eliminarCoche(@RequestParam ("cocheid") Long id) {
 		cocheServicio.eliminarCoche(id);
-		return "redirect:/coches";
+		return new RedirectView("/");
 	}
     
 /*

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang xmlns:th="http://www.thymeleaf.org">
+<html lang ="es" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <title>Registro de coches</title>
@@ -15,7 +15,7 @@
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link"
-					th:href="@{/coches}">Control de coches</a></li>
+					th:href="@{/}">Control de coches</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -24,22 +24,22 @@
     <div class="container">
         <div class="row">
            <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-               <h1 class="text-center">Edición de coche</h1>
+               <h1 class="text-center">Crear coche</h1>
                <div class="card-body">
-                  <form th:action="@{/coches/{id}(id=${coche.id})}" th:object="${coche}" method="POST">
+                  <form th:action="@{/guardar-coches}" th:object="${coche}" method="POST">
                      <div class="form-group">
                         <label>Marca : </label>
-                        <input type="text" name="marca" th:field="*{marca}" class="form-control" placeholder="Digite su marca : " required>
+                        <input type="text" name="marca" th:field="*{marca}" value=" " class="form-control" placeholder="Digite su marca : " required>
                      </div>
                     
                      <div class="form-group">
                         <label>Modelo : </label>
-                        <input type="text" name="modelo" th:field="*{modelo}" class="form-control" placeholder="Digite su modelo : " required>
+                        <input type="text" name="modelo" th:field="*{modelo}" value=" " class="form-control" placeholder="Digite su modelo : " required>
                      </div>
                      
                      <div class="form-group">
                         <label>Matricula : </label>
-                        <input type="texto" name="matricula" th:field="*{matricula}" class="form-control" placeholder="Digite su matricula : " required>
+                        <input type="texto" name="matricula" th:field="*{matricula}" value=" " class="form-control" placeholder="Digite su matricula : " required>
                      </div>
                      
                      <div class="box-footer">

@@ -40,8 +40,8 @@ public class CocheServicioImp implements CocheServicio {
     }
 
     @Override
-    public Optional<Coche> obtenerCochePorId(Long id) {
-        return repositorio.findById(id);
+    public Coche obtenerCochePorId(Long id) {
+        return repositorio.findById(id).get();
     }
     
     

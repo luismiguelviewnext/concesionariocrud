@@ -18,7 +18,7 @@ public interface CocheServicio {
 
     public void eliminarCoche(Long id);
 
-    public Optional<Coche> obtenerCochePorId(Long id);
+    public Coche obtenerCochePorId(Long id);
 
 
 }
