@@ -31,7 +31,7 @@ spring.jpa.properties.hibernate.format_sql=true
 
 Estas propiedades están habilitadas para mostrar las consultas SQL en la consola y formatearlas para mejorar la legibilidad.
 
-###Puerto del Servidor:
+### Puerto del Servidor:
 
 server.port=8080
 
