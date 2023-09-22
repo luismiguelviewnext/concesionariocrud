@@ -21,20 +21,39 @@ import org.springframework.web.bind.annotation.PutMapping;
 import com.proyectocrud.concesionariocrud.entidad.Coche;
 import com.proyectocrud.concesionariocrud.servicio.CocheServicio;
 
+// Importaciones...
 
+/**
+ * Controlador principal para las operaciones de Coche.
+ */
 @Controller
 public class CocheController {
-
+    
+     /**
+     * Servicio para realizar operaciones CRUD para Coche.
+     */
     @Autowired
     private CocheServicio cocheServicio;
 
-   @GetMapping("/")
+
+      /**
+     * Lista todos los coches disponibles y los presenta en la vista 'coches'.
+     *
+     * @param model Modelo a utilizar para añadir atributos.
+     * @return La vista 'coches'.
+     */
+    @GetMapping("/")
     public String listarCoches(Model modelo){
         modelo.addAttribute("coches", cocheServicio.listarTodosLosCoches());
         return "coches"; // nos devuelve el archivo coches.   
     }
    
-
+       /**
+     * Muestra el formulario para registrar un nuevo Coche.
+     *
+     * @param modelo Modelo a utilizar para añadir atributos.
+     * @return La vista 'crear_coche'.
+     */
     @GetMapping({"/coches/nuevo"})
     public String mostrarFormularioRegistrarCoche(Model modelo){
         Coche coche = new Coche();
@@ -42,23 +61,39 @@ public class CocheController {
         return "crear_coche";
     }
 
+        /**
+     * Guarda un nuevo Coche y redirige al usuario a la página principal.
+     *
+     * @param coche El coche a guardar.
+     * @return Una vista de redirección a la página principal.
+     */
     @PostMapping("/guardar-coches")
 	public RedirectView guardarCoche(@ModelAttribute Coche coche) {
 		cocheServicio.guardarCoche(coche);
-        /*Set<Coche> listaCoche = new HashSet();
-        listaCoche = coche.getListaCoche();
-        listaCoche.add(coche);
-        coche.setListaCoche(listaCoche);
-        if(listaCoche.isEmpty())*/
 		return new RedirectView("/");
 	}
 
+       /**
+     * Muestra el formulario de edición para un Coche existente.
+     *
+     * @param id     El ID del Coche a editar.
+     * @param modelo Modelo a utilizar para añadir atributos.
+     * @return La vista 'editar_coches'.
+     */
 	@GetMapping("/coches/editar/{id}")
 	public String mostrarFormularioDeEditar(@PathVariable Long id, Model modelo) {
             modelo.addAttribute("coche", cocheServicio.obtenerCochePorId(id));
             return "editar_coches";
         }
 	
+            /**
+     * Actualiza un Coche existente y redirige al usuario a la lista de coches.
+     *
+     * @param id     El ID del Coche a actualizar.
+     * @param coche  El coche con los datos actualizados.
+     * @param modelo Modelo a utilizar para añadir atributos.
+     * @return Una vista de redirección a la lista de coches.
+     */
     @PostMapping("/coches/actualizar/{id}")
     public String actualizarCoche(@PathVariable Long id, @ModelAttribute Coche coche, Model modelo) {
        
@@ -73,22 +108,15 @@ public class CocheController {
     }
     
     
-
+    /**
+     * Elimina un Coche existente y redirige al usuario a la página principal.
+     *
+     * @param id El ID del Coche a eliminar.
+     * @return Una vista de redirección a la página principal.
+     */
 	@PostMapping("/coches/eliminar")
 	public RedirectView eliminarCoche(@RequestParam ("cocheid") Long id) {
 		cocheServicio.eliminarCoche(id);
 		return new RedirectView("/");
 	}
-    
-/*
-    @GetMapping("/coches/{id}")
-    public ResponseEntity<?> obtenerCoche(@PathVariable Long id) {
-        Optional<Coche> coche = cocheServicio.obtenerCochePorId(id);
-        if (coche.isPresent()) {
-            return new ResponseEntity<>(coche.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("ID incorrecta", HttpStatus.NOT_FOUND);
-        }
-    }
-    */
 }

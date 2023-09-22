@@ -8,14 +8,34 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.proyectocrud.concesionariocrud.entidad.Coche;
 import com.proyectocrud.concesionariocrud.repositorio.CocheRepositorio;
 
+/**
+ * Clase principal de la aplicación Concesionariocrud.
+ * 
+ * Esta clase inicia la aplicación Spring Boot y implementa {@link CommandLineRunner}
+ * para ejecutar código adicional después de iniciar la aplicación.
+ * 
+ */
 @SpringBootApplication
 public class ConcesionariocrudApplication implements CommandLineRunner {
 
+	/**
+     * Método principal para ejecutar la aplicación Spring Boot.
+     *
+     * @param args Argumentos de la línea de comandos.
+     */
 	public static void main(String[] args) {
 		SpringApplication.run(ConcesionariocrudApplication.class, args);
 	}
 	@Autowired
 	private CocheRepositorio repositorio;
+	
+	/**
+     * Método run de CommandLineRunner para ejecutar lógica adicional
+     * después de iniciar la aplicación Spring Boot.
+     *
+     * @param args Argumentos de la línea de comandos.
+     * @throws Exception si ocurre cualquier excepción durante la ejecución.
+     */
 	@Override
 	public void run(String... args) throws Exception{
 
