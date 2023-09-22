@@ -76,7 +76,7 @@ Para eliminar un coche:
 
 
 ## Problemas y Soluciones
-Si encuentras algún problema mientras utilizas la aplicación, por favor consulta la sección de "Problemas Comunes" o "FAQ". Si no encuentras una solución allí, siéntete libre de abrir un nuevo "Issue" en el repositorio de GitHub del proyecto.
+Si encuentras algún problema mientras utilizas la aplicación, por favor consulta la documentación de cada versión utilizada en sus respectivas páginas oficiales. Si no encuentras una solución allí, siéntete libre de abrir un nuevo "Issue" en el repositorio de GitHub del proyecto.
 
 ## Contribuciones
 Si tienes sugerencias de mejoras o encuentras errores, no dudes en crear un "Pull Request".
